@@ -1,0 +1,22 @@
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return helper(0,0,inorder.length-1,preorder,inorder);       
+    }
+    public TreeNode helper(int pre,int ins,int ine,int[] preorder, int[] inorder){
+        if(pre > preorder.length-1 || ins > ine) return null;
+
+        TreeNode root = new TreeNode(preorder[pre]);
+
+        int ini = 0;
+        for(int i=ins ; i<=ine; i++){
+            if(root.val == inorder[i]){
+                ini = i;
+            }
+        }
+
+        root.left = helper(pre+1,ins,ini-1,preorder,inorder);
+        root.right = helper(pre+ini-ins+1,ini+1,ine,preorder,inorder);
+
+        return root;
+    }
+}
